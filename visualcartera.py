@@ -20,6 +20,15 @@ with col2:
 #st.title("📞 Dashboard de Llamadas de Cartera")
 
 # ==========================
+# Cargar datos desde archivos CSV
+# ==========================
+df_puntaje = pd.read_csv("data/puntaje_promedio_por_asesor.csv")
+df_detalle = pd.read_csv("data/promedio_conteo_por_categoria.csv")
+df_sentimiento = pd.read_csv("data/sentimiento_general.csv")
+df_polaridad_asesor = pd.read_csv("data/polaridad_por_asesor.csv")
+df_resultados = pd.read_csv("data/resultados_por_asesor.csv")
+
+# ==========================
 # Tarjetas métricas generales
 # ==========================
 st.markdown("## 📋 Resumen General de Métricas")
@@ -211,7 +220,7 @@ else:
     for asesor, grupo in df_resultados.groupby("asesor"):
         with st.expander(f"👤 {asesor} — {len(grupo)} llamadas"):
             for _, fila in grupo.iterrows():
-                st.markdown(f"**📄 Archivo:** `{fila['archivo']}`")
+                st.markdown(f"**📄 Archivo:** {fila['archivo']}")
                 for cat, (minimo, _) in requisitos.items():
                     conteo = fila.get(cat, 0)
                     ok = fila.get(f"{cat}_ok", "❌")
