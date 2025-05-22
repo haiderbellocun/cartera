@@ -30,12 +30,6 @@ df_resultados = pd.read_csv("data/resultados_por_asesor.csv")
 
 st.markdown("## 📋 Resumen General de Métricas")
 
-# TEST: Para verificar si las tarjetas se renderizan
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Test", "90%")
-col2.metric("Test", "80%")
-col3.metric("Test", "0.45")
-col4.metric("Test", "0.75")
 
 # Cálculo de promedios reales
 avg_puntaje      = df_puntaje["puntaje_promedio"].mean() if not df_puntaje.empty else 0
