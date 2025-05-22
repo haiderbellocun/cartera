@@ -26,41 +26,25 @@ st.markdown("## 📋 Resumen General de Métricas")
 
 col1, col2, col3, col4 = st.columns(4)
 
-# Cálculo de promedios con validación
-avg_puntaje = (
-    df_puntaje["puntaje_promedio"].mean()
-    if "puntaje_promedio" in df_puntaje.columns and not df_puntaje.empty
-    else None
-)
+# Cálculo de promedios (suponiendo que ya están cargados los DataFrames)
+avg_puntaje = df_puntaje["puntaje_promedio"].mean()
 
-conf_col = "confidence" if "confidence" in df_sentimiento.columns else (
-    "confianza" if "confianza" in df_sentimiento.columns else None
-)
-avg_confianza = (
-    df_sentimiento[conf_col].mean()
-    if conf_col and not df_sentimiento.empty
-    else None
-)
+# Detectar columna de confianza
+if "confidence" in df_sentimiento.columns:
+    avg_confianza = df_sentimiento["confidence"].mean()
+elif "confianza" in df_sentimiento.columns:
+    avg_confianza = df_sentimiento["confianza"].mean()
+else:
+    avg_confianza = 0
 
-avg_polarity = (
-    df_sentimiento["polarity"].mean()
-    if "polarity" in df_sentimiento.columns and not df_sentimiento.empty
-    else None
-)
+avg_polarity = df_sentimiento["polarity"].mean()
+avg_subjectivity = df_sentimiento["subjectivity"].mean()
 
-avg_subjectivity = (
-    df_sentimiento["subjectivity"].mean()
-    if "subjectivity" in df_sentimiento.columns and not df_sentimiento.empty
-    else None
-)
-
-# Despliegue de métricas con valores seguros
-col1.metric("Puntaje Promedio", f"{avg_puntaje:.2%}" if avg_puntaje is not None else "N/A")
-col2.metric("Confianza Promedio", f"{avg_confianza:.2%}" if avg_confianza is not None else "N/A")
-col3.metric("Polaridad Promedio", f"{avg_polarity:.2f}" if avg_polarity is not None else "N/A")
-col4.metric("Subjectividad Promedio", f"{avg_subjectivity:.2f}" if avg_subjectivity is not None else "N/A")
-
-
+# Mostrar tarjetas
+col1.metric("Puntaje Promedio",       f"{avg_puntaje:.2%}")
+col2.metric("Confianza Promedio",     f"{avg_confianza:.2%}")
+col3.metric("Polaridad Promedio",     f"{avg_polarity:.2f}")
+col4.metric("Subjectividad Promedio", f"{avg_subjectivity:.2f}")
 
 
 # ==========================
