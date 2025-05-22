@@ -28,32 +28,27 @@ df_sentimiento = pd.read_csv("data/sentimiento_general.csv")
 df_polaridad_asesor = pd.read_csv("data/polaridad_por_asesor.csv")
 df_resultados = pd.read_csv("data/resultados_por_asesor.csv")
 
-# ==========================
-# Tarjetas métricas generales
-# ==========================
 st.markdown("## 📋 Resumen General de Métricas")
 
-# Si quieres 4 tarjetas (puntaje, confianza, polaridad, subjetividad):
+# TEST: Para verificar si las tarjetas se renderizan
 col1, col2, col3, col4 = st.columns(4)
+col1.metric("Test", "90%")
+col2.metric("Test", "80%")
+col3.metric("Test", "0.45")
+col4.metric("Test", "0.75")
 
-# Cálculo de promedios
-avg_puntaje      = df_puntaje["puntaje_promedio"].mean() \
-                   if not df_puntaje.empty else 0
-# Ajusta el nombre de la columna de confianza si es distinto
+# Cálculo de promedios reales
+avg_puntaje      = df_puntaje["puntaje_promedio"].mean() if not df_puntaje.empty else 0
 conf_col         = "confidence" if "confidence" in df_sentimiento.columns else "confianza"
-avg_confianza    = df_sentimiento[conf_col].mean() \
-                   if conf_col in df_sentimiento.columns else 0
-avg_polarity     = df_sentimiento["polarity"].mean() \
-                   if "polarity" in df_sentimiento.columns else 0
-avg_subjectivity = df_sentimiento["subjectivity"].mean() \
-                   if "subjectivity" in df_sentimiento.columns else 0
+avg_confianza    = df_sentimiento[conf_col].mean() if conf_col in df_sentimiento.columns else 0
+avg_polarity     = df_sentimiento["polarity"].mean() if "polarity" in df_sentimiento.columns else 0
+avg_subjectivity = df_sentimiento["subjectivity"].mean() if "subjectivity" in df_sentimiento.columns else 0
 
-# Despliegue de métricas
+# Despliegue de métricas reales
 col1.metric("Puntaje Promedio",       f"{avg_puntaje:.2%}")
 col2.metric("Confianza Promedio",     f"{avg_confianza:.2%}")
 col3.metric("Polaridad Promedio",     f"{avg_polarity:.2f}")
 col4.metric("Subjectividad Promedio", f"{avg_subjectivity:.2f}")
-
 
 
 
